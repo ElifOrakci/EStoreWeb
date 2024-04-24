@@ -1,0 +1,22 @@
+﻿[
+  {
+    "outputFile": "wwwroot/css/Admin-green.css",
+    "inputFile": "Styles/Admin-green.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Admin-indigo.css",
+    "inputFile": "Styles/Admin-indigo.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Admin-orange.css",
+    "inputFile": "Styles/Admin-indigo.scss"
+  },
+  {
+    "outputFile": "Styles/Admin-orange.css",
+    "inputFile": "Styles/Admin-orange.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/site.css",
+    "inputFile": "Styles/site.scss"
+  }
+]

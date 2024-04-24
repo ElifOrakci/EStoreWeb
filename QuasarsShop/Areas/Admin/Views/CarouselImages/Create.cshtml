@@ -1,0 +1,16 @@
+﻿@model CarouselImageViewModel
+@{
+    ViewData["Title"] = "Tanıtım Görselleri Ekleme";
+}
+
+
+<form method="post" enctype="multipart/form-data">
+    <partial name="_FieldsPartial" model="Model" />
+
+    <hr />
+    <partial name="_FormButtonsPartial" />
+</form>
+
+@section scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

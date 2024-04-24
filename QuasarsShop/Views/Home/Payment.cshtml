@@ -1,0 +1,14 @@
+﻿@model PaymentResult 
+@{
+}
+
+@if (Model.Succeeded)
+{
+    <h2>Teşekkürler</h2>
+    <p>Siparişinizi aldık.Siparişlerinizi takip için<a asp-controller="Account" asp-action="Orders">tıklayınız.</a></p>
+}
+else
+{
+    <h2>Üzgünüz</h2>
+    <p>@Model.Error!</p>
+}

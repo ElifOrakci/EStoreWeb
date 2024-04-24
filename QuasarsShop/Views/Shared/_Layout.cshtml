@@ -1,0 +1,59 @@
+﻿@{
+    var adminRoles = new[] { "Administrators", "ProductAdministrators", "OrderAdministrators" };
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QuasarShop</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+   </head>
+<body>
+    @if (adminRoles.Any ( User.IsInRole))
+    {
+       <div class=" d-flex justify-content-center py-2 bg-secondary">
+        <a class=" text-white text-decoration-none" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Yönetim Sayfası</a>
+    </div> 
+    }
+    <header>
+        @await Component.InvokeAsync("NavBar")
+    </header>
+
+    <div class="container">
+    <div class=" d-flex justify-content-end mb-1">
+        <form method="get" asp-action="Search">
+            <div class=" row row-cols-lg-auto g-2">
+                <div class=" col-12">
+                  <input type="search" class=" form-control" name="keywords" id="keywords" value="@ViewContext.HttpContext.Request.Query["keywords"]" />
+               </div>
+                <div class=" col-12">
+                    <button type="submit" class="btn btn-outline-primary">
+                        <i class=" bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+                        
+        </form>
+    </div>
+    
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - QuasarShop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+   
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+  

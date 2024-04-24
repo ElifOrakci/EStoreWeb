@@ -1,0 +1,31 @@
+﻿@model ProductViewModel
+@{
+    ViewData["Title"] = "Ürün Ekleme";
+}
+
+<form method="post" enctype="multipart/form-data">
+    <partial name="_FieldsPartial" model="Model" />
+
+    <hr />
+    
+    <partial name="_FormButtonsPartial" />
+</form>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(() => {
+            $('#Price').on('change', getDiscountedPrice);
+            $('#DiscountRate').on('change', getDiscountedPrice);
+
+            function getDiscountedPrice(e) {
+                const price = $('Price').val();
+                const discountRate = $('DiscountRate').val();
+
+                $('#getDiscountedPrice').val(price - (price * discountRate / 100));
+            }
+        });
+        
+    </script>
+}

@@ -1,0 +1,15 @@
+﻿@model ProductViewModel
+@{
+    ViewData["Title"] = "Ürün Güncelleme";
+}
+
+<form method="post" enctype="multipart/form-data">
+    <partial name="_FieldsPartial" model="Model" /> 
+   
+    <hr />
+    <partial name="_FormButtonsPartial" />
+</form>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

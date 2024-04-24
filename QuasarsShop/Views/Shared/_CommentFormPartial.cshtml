@@ -1,0 +1,24 @@
+﻿@model CommentViewModel
+
+<form method="post" asp-action="AddComment">
+    <input type="hidden" asp-for="ProductId" />
+    <div class="form-group mb-2">
+        <label asp-for="Rating" class="control-label"></label>
+        <select asp-for="Rating" class="form-control" asp-items="Model.SelectList"></select>
+        <span asp-validation-for="Rating" class="text-danger"></span>
+    </div>
+    <label asp-for="Text"></label>
+      <textarea asp-for="Text" class=" form-control"></textarea>
+@*       <div class=" py-2 rating-wrapper">
+        @for (int i = 0; i < 5; i++)
+        {
+            <i class=" bi bi-star me-2"data-index="@i"></i>
+        }
+    </div> *@
+    <div class="py-2">
+        <button type="submit" class=" btn btn-primary">
+            Gönder
+        </button>
+    </div>
+ </form>
+  

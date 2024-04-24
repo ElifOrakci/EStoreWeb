@@ -1,0 +1,9 @@
+﻿@{
+    ViewData["Title"] = "Arama Sonuçları";
+}
+<div class=" fs-1">Arama Sonuçları</div>
+<div>Bulunan Ürün : @((Model as IEnumerable<dynamic>).Count().ToString("n0"))</div>
+<hr />
+
+
+<partial name="_ProductListPartial" model="Model"/>

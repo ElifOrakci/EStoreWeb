@@ -1,0 +1,36 @@
+﻿@model CarouselImageViewModel
+
+<input type="hidden" asp-for ="Image" />
+
+@if (ViewContext.RouteData.Values["action"]?.ToString() == "Edit")
+{
+    <div class="mb-3 col-12 col-lg-4">
+        <img src="@Model.Image" width="360" height="120" />
+    </div>
+}
+
+<div class="mb-3 col-12 col-lg-4">
+    <label class="form-label" asp-for="ImageFile"></label>
+    <input class="form-control" asp-for="ImageFile" accept=" image/*" />
+    <div class="alert alert-light">
+        <ul class=" list-unstyled">
+            <li>En iyi görünüm için 1440&times;480 piksel ebadında görseller yükleyeniz</li>
+        </ul>
+    </div>
+</div>
+<div class="mb-3 col-12 col-lg-4">
+    <label class="form-label" asp-for="DateFirst"></label>
+    <input class="form-control"  asp-for="DateFirst" />
+</div>
+<div class="mb-3 col-12 col-lg-4">
+    <label class="form-label" asp-for="DateEnd"></label>
+    <input class="form-control" asp-for="DateEnd" />
+</div>
+
+
+<div class="mb-3 col-4">
+    <div class="form-check form-switch">
+        <input type="checkbox" class="form-check-input" asp-for="Enabled" />
+        <label class="form-check-label" asp-for="Enabled"></label>
+    </div>
+</div>

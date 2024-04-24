@@ -1,0 +1,10 @@
+@import 'startbootstrap-sb-admin-2-bs5/scss/_variables.scss';
+$primary: indigo;
+$green: #848b00;
+$border-radius: .7rem;
+
+@import 'startbootstrap-sb-admin-2-bs5/scss/sb-admin-2.scss';
+
+a {
+    @extend .text-decoration-none;
+}

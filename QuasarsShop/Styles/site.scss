@@ -1,0 +1,9 @@
+$primary : #6e00d0;
+$green : #86bb00;
+$enable-rounded : false;
+
+@import '../wwwroot/lib/bootstrap/scss/bootstrap.scss';
+
+.rating-wrapper i {
+    cursor: pointer;
+}

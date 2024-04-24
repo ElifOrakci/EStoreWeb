@@ -1,0 +1,94 @@
+﻿@model NavBarViewModel
+@{
+}
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-1">
+    <div class="container">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+            <img src="" height=" 60" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1 justify-content-center">
+                @foreach (var catalog in Model.Catalogs)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Catalog" asp-route-id ="@catalog.Id">
+                            @catalog.Name
+                        </a>
+                    </li>
+                }
+             </ul>
+             <ul>
+                <ul class=" navbar-nav ms-auto">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class=" nav-item dropdown">
+                            <a class=" nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdowm" aria-expanded="false">
+                                Hoş geldiniz Sn.@User.FindFirst(System.Security.Claims.ClaimTypes.GivenName)?.Value
+                            </a>
+                            <ul class=" dropdown-menu">
+                                <li><a class=" dropdown-item"asp-controller="Account"asp-action="Profile">Profilim</a></li>
+                                <li><a class=" dropdown-item" asp-controller="Account" asp-action="Favorites">Favorilerim</a></li>
+                                <li><a class=" dropdown-item" asp-controller="Account" asp-action="Orders">Önceki Siparişlerim</a></li>
+                                
+                            </ul>
+                        </li>
+                        @if (!User.IsInRole("Administrators"))
+                        {
+                            <li class=" nav-item ms-4">
+
+                                <a class="btn btn-primary rounded position-relative" asp-controller="Home" asp-action="Favorites">
+                                    <i class=" bi bi-heart"></i>
+
+                                    @if (Model.FavoriteCount > 0)
+                                    {
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger ">
+                                            @(Model.FavoriteCount >= 100 ? "99+" : Model.FavoriteCount.ToString())
+                                            <span class=" visually-hidden">Favorilerim</span>
+                                        </span>
+                                    }
+                                </a>
+
+                            </li>
+                        }
+                        @if (!User.IsInRole("Administrators"))
+                        {
+                            <li class=" nav-item ms-4">
+                                <a class="btn btn-primary rounded position-relative" asp-controller="Home" asp-action="Checkout">
+                                    <i class=" bi bi-cart"></i>
+                                    @if (Model.ShoppingCartItemCount > 0)
+                                    {
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger ">
+                                            @(Model.ShoppingCartItemCount >= 100 ? "99+" : Model.ShoppingCartItemCount.ToString())
+                                            <span class=" visually-hidden">Sepetim</span>
+                                        </span>
+
+                                    }
+                                </a>
+                            </li>
+                        }
+
+                          <li class=" nav-item ms-4">
+                            <a class=" nab-link" asp-controller="Account" asp-action="Logout">Çıkış</a>
+                        </li>
+                    }
+                    else
+                    {
+                    <li class=" nav-item">
+                        <a class=" nab-link" asp-controller="Account" asp-action="Register">Yeni Üyelik</a>
+                    </li>
+                        <li class=" nav-item">|</li>
+                    <li class=" nav-item">
+                        <a class=" nab-link" asp-controller="Account" asp-action="Login">Giriş</a>
+                    </li> 
+                    }
+                  
+                </ul>
+             </ul>
+
+        </div>
+    </div>
+</nav>

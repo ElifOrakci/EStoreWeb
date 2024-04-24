@@ -1,0 +1,9 @@
+﻿<div class=" row wor-cols-1 row-cols-md-6 g-3">
+    @foreach (var product in Model)
+    {
+        <div class=" col">
+            <partial name="_ProductBoxPartial" model="product" />
+        </div>
+
+    }
+</div>

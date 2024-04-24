@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Favori Ürünleriniz";
+}
+<h2>@ViewData["Title"]</h2>
+
+<div class=" d-flex py-2">
+    <a class=" btn btn-outline-danger ms-auto" asp-action="ClearFavorites">Temizle</a>
+</div>
+
+<table class=" table">
+    <colgroup>
+<col width="120" />
+<col />
+<col />
+<col width="40"/>
+     </colgroup>
+   <thead>
+           <tr>
+            <th>
+                Görsel
+            </th>
+            <th>
+                Ürün Adı
+            </th>
+            <th>
+                Fiyat
+            </th>
+            <th>
+           </th>
+        </tr>
+ </thead>
+ <tbody>
+        @foreach (var product in Model)
+        {
+             <tr>
+            <td>
+                 <a asp-action="Product" asp-route-id="@product.Id">
+                        <img src="@product.Image" class=img-fluid object-fit-contain" />
+                 </a>
+                
+            </td>
+            <td>
+                @product.Name
+            </td>
+            <td>
+                @product.DiscountedPrice.ToString("N2")
+            </td>
+            <td>
+                <a class=" btn btn-link" asp-action="RemoveFromFavorites" asp-route-id="@product.Id">
+                    <i class=" bi bi-trash"></i>
+                </a>
+            </td>
+        </tr>
+        }
+     </tbody>
+</table>

@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Order>
+@{
+    ViewData["Title"] = "Siparişler";
+}
+<div class="card">
+    <table class="table">
+        <colgroup>
+            <col width="120" />
+            <col width="120" />
+            <col />
+            <col />
+            <col />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>Ürünler</th>
+                <th>Kullanıcı</th>
+                <th>Tarih</th>
+                <th>Durum</th>
+                <th>Tutar</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="d-flex gap-1" style="padding-left:30px">
+                            @foreach (var detail in order.OrderDetails.Take(3))
+                            {
+                                <img src="@detail.Product!.Image" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@detail.Product.Name" class="border rounded-circle p-1 bg-white object-fit-cover" style="margin-left:-30px" height="80" width="80" />
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex flex-column gap-2">
+                            <div>@order.User!.Name</div>
+                            <div>
+                                <a href="mailto:@order.User.UserName">@order.User.UserName</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        @order.Date.ToLocalTime().ToShortDateString()
+                    </td>
+                    <td>
+
+                        @switch (order.Status)
+                        {
+                            case DeliveryStatus.New:
+                                <span class="text-danger">
+                                    <i class="bi bi-asterisk"></i> Sipariş alındı
+                                </span>
+                                break;
+                            case DeliveryStatus.OnDelivery:
+                                <span class="text-info">
+                                    <i class="bi bi-truck"></i> Kargoya verildi
+                                </span>
+                                <div> Kargo takip numaranız: <b>@order.CargoTrackingNumber</b></div>
+                                break;
+                            case DeliveryStatus.Shipped:
+                                <span class="text-success">
+                                    <i class="bi bi-check"></i> Teslim edildi
+                                </span>
+                                break;
+                        }
+                    </td>
+                    <td>
+                        @order.GrandTotal.ToString("n2")
+                    </td>
+                    <td>
+                        @switch (order.Status)
+                        {
+                            case DeliveryStatus.New:
+                                <form method="get" asp-action="Deliver">
+                                    <div class="col-6 d-flex gap-2">
+                                        <input type="hidden" name="id" value="@order.Id" />
+                                        <input type="text" name="trackingNumber" class="form-control" />
+                                        <button type="submit" class="btn btn-primary">Kargoya Teslim Et</button>
+                                    </div>
+                                </form>
+                                break;
+                            case DeliveryStatus.OnDelivery:
+                                <a class="btn btn-success" asp-action="Complete" asp-route-id="@order.Id">Teslim Edildi</a>
+                                break;
+                            case DeliveryStatus.Shipped:
+                                break;
+                            default:
+                                break;
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Order>
+@{
+    ViewData["Title"] = "Önceki Siparişlerim";
+}
+
+<table class=" table table-bordered" >
+    <colgroup>
+        <col width="120" />
+        <col width="120" />
+        <col />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>Ürünler</th>
+            <th>Tarih</th>
+            <th>Durum</th>
+            <th>Tutar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+           <tr>
+               <td>
+                
+                    <div class=" d-flex gap-1" style="padding-left:30px">
+                    @foreach (var detail in order.OrderDetails.Take(3))
+                    {
+                       <img src="@detail.Product!.Image" class="border rounded-circle p-2 bg-white object-fit-cover" style="margin-left:-30px" height="80" width="80">
+                    }
+                    </div>
+                <td>
+                </td>
+                    @order.Date.ToLocalTime().ToShortDateString()
+                <td>
+              <td>
+
+                            @switch (order.Status)
+                            {
+                                case DeliveryStatus.New:
+                            <span class=" text-danger">
+                                <i class=" bi bi-asterisk"></i>Sipariş alındı
+                            </span>
+                                    break;
+                                    case DeliveryStatus.OnDelivery:
+                            <span class=" text-info">
+                                <i class=" bi bi-check"></i>Kargoya verildi
+                            </span>
+                                    break;
+                                    case DeliveryStatus.Shipped:
+                            <span class=" text-success">
+                                <i class=" bi bi-check"></i>Teslim edildi
+                            </span>
+                             break;
+                            }
+                        </td>
+                 <td>
+                       @order.GrandTotal.ToString("n2")
+                </td>
+           </tr> 
+        }
+    </tbody>
+
+</table>

@@ -1,0 +1,103 @@
+﻿@model CheckoutViewModel
+@{
+    ViewData["Title"] = "Sepetiniz";
+}
+<h2>@ViewData["Title"]</h2>
+@if (Model.ShoppingCartItems.Any())
+{
+    <div class=" d-flex py-2">
+    <a class=" btn btn-outline-danger ms-auto" asp-action="ClearShoppingCart">Temizle</a>
+</div>
+
+<div class=" row">
+    <div class=" col-12 col-md-9">
+        <table class=" table">
+            <colgroup>
+                <col width="120" />
+                <col />
+                <col />
+                <col width="40" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>
+                        Görsel
+                    </th>
+                    <th>
+                        Ürün Adı
+                    </th>
+                    <th>
+                        Fiyat
+                    </th>
+                    <th>
+                        Miktar
+                    </th>
+                    <th>
+                        Tutar
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ShoppingCartItems)
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="Product" asp-route-id="@item.Product.Id">
+                                <img src="@item.Product!.Image" class=img-fluid object-fit-contain" />
+                            </a>
+
+                        </td>
+                        <td>
+                            @item.Product.Name
+                        </td>
+                        <td class=" text-end font-monospace">
+                            @item.Product.DiscountedPrice.ToString("N2")
+                            <div class=" small text-decoration-line-through text-muted">
+                                ₺@item.Product.Price.ToString("N2")
+                            </div>
+                        </td>
+                        <td class=" text-end font-monospace">
+                            @item.Quantity.ToString("n0")
+                        </td>
+                        <td class=" text-end font-monospace">
+                            ₺@item.LineTotal.ToString("n0")
+                            <div class=" small text-decoration-line-through text-muted">
+                                ₺@item.BaseTotal.ToString("N2")
+                            </div>
+                        </td>
+                        <td>
+                            <a class=" btn btn-link" asp-action="RemoveFromShoppingCart" asp-route-id="@item.Id">
+                                <i class=" bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class=" col-12 col-md-3">
+        <div class=" d-flex flex-column gap-2">
+            <div class=" text-bg-danger p-4 ">
+                <div>Genel Toplam</div>
+                <div class=" h2">₺ @Model.GrandTotal.ToString("n2")</div>
+                <div class=" text-light">Kazancınız <br />₺ @Model.Earning.ToString("n2")</div>
+
+            </div>
+            <a class=" btn btn-success" asp-controller="Home" asp-action="payment">SATIN AL</a>
+        </div>
+       
+    </div>
+</div>
+}
+else
+{
+    <div class=" d-flex flex-column align-items-center justify-content-center gap-2">
+        <div class=" fs-1"><i class=" bi bi-emoji-frown"></i></div>
+        <div> Sepetizde henüz ürün yok.</div>
+    </div>
+}
+
+
+

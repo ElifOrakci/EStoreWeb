@@ -1,0 +1,15 @@
+﻿@model CatalogViewModel
+@{
+    ViewData["Title"] = "Katalog Ekleme";
+}
+
+<form method="post">
+    <partial name="_FieldsPartial" model="Model" />
+
+    <hr />
+    <partial name="_FormButtonsPartial" />
+</form>
+
+@section scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

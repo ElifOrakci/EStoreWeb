@@ -1,0 +1,169 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<div class="row">
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Satışlar (Son 30 Gün)
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.SalesMonthly.ToString("c2")</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Satışlar (Son 12 Ay)
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.SalesAnnually.ToString("c2")</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Üyeler
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.UsersCount.ToString("n0")</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Requests Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                           Yeni Yorumlar
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.CommentsCount.ToString("n0")</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+
+    <!-- Area Chart -->
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Yeni Yorumlar</h6>
+           </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <table class=" table">
+                    <colgroup>
+                        <col width="180" />
+                        <col width="180" />
+                        <col width="180" />
+                        <col />
+                        <col />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Ürün</th>
+                            <th>Yazar</th>
+                            <th>Yorum</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      @foreach(var comment in ViewBag.NewComments as IEnumerable <GetCommentsViewModel>)
+                      {
+                            <tr>
+                                <td>@comment.Created.ToLocalTime().ToCreatedTimeString()</td>
+                                <td>@comment.ProductName</td>
+                                <td>@comment.UserName</td>
+                                <td>@comment.Text</td>
+                                <td>
+                                    <a asp-controller="Products" asp-action="EnableComment" asp-route-id="@comment.Id" class="btn btn-success ">
+                                        <i class=" bi bi-check"></i>
+                                    </a>
+                                    <a asp-controller="Products" asp-action="RemoveComment" asp-route-id="@comment.Id" class="btn btn-danger ">
+                                        <i class=" bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    
+                    </div>
+                </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="chart-pie pt-4 pb-2">
+                    <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                    <canvas id="myPieChart" width="631" height="245" style="display: block; width: 631px; height: 245px;" class="chartjs-render-monitor"></canvas>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/js/chart.js/chart.min.js"></script>
+    <script src="~/js/chart-area-demo.js"></script>
+ }
+
